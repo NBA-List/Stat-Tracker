@@ -1,38 +1,49 @@
-const path = require('path');
-const express = require('express');
+const path = require("path");
+const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const UserController = require('./controllers/UserController');
-const User = require(path.resolve(__dirname, './models/UserModels'));
-
+const UserController = require("./controllers/UserController");
+const User = require(path.resolve(__dirname, "./models/UserModels"));
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const { OAuth2Client } = require("google-auth-library");
 
 const PORT = 3000;
 
 /**
  * handle parsing request body
  */
+console.log("hi");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 /**
  * handle requests for static files
  */
-app.use(express.static(path.resolve(__dirname, '../client')));
+app.get("/build", (req, res) => {
+  console.log("hi");
+});
+app.use(express.static(path.resolve(__dirname, "../build")));
 
+// Create a user in the database
+// http://localhost:3000/signup
+app.get("/", (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
+});
 
-// Create a student in the database
-// http://localhost:3000/student
-app.post('/signup', UserController.createUser, (req, res) => {
-    res.send(res.locals.createdUser);
-  });
-
+app.post("/", UserController.getJWT, (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
+});
 
 /**
  * start server
  */
- app.listen(PORT, () => {
-    console.log(`Server listening on port: ${PORT}...`);
-  });
-  
-  module.exports = app;
-  
+app.listen(PORT, () => {
+  console.log(`Server listening on port: ${PORT}...`);
+});
+
+module.exports = app;
