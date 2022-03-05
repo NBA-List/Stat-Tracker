@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 const handleCredentialResponse = (e) => {
-  console.log("hi");
+  console.log("inside handleCred login.js");
 };
 
 // class Login extends Component {
@@ -11,7 +11,7 @@ const Login = () => {
       <div
         id="g_id_onload"
         data-client_id={process.env.CLIENT_ID}
-        data-login_uri="http://localhost:8080"
+        data-login_uri="http://localhost:3000"
         data-auto_prompt="false"
         data-callback="handleCredentialResponse"
       ></div>
