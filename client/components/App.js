@@ -15,6 +15,7 @@ const App = () => {
     <>
       {/* <Dashboard /> */}
       <Login />
+      <p>Hello from App.js</p>
     </>
   );
   // if logged in, render dashboard
