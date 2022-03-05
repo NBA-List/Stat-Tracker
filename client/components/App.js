@@ -6,13 +6,15 @@ import { useState } from "react";
 // use useContext instead grab context from Login
 // const [ loggedIn ] = useState('');
 
+document.getElementById("client_id").content = process.env.CLIENT_ID;
+
 // class App extends Component {
 const App = () => {
   // if not logged in, render this
   return (
     <>
       {/* <Dashboard /> */}
-      <Login />\{" "}
+      <Login />
     </>
   );
   // if logged in, render dashboard
