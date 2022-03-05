@@ -1,16 +1,20 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DotenvWebpackPlugin = require("dotenv-webpack");
 const path = require("path");
-
+console.log("in webpack", path.resolve(__dirname, "build"));
 module.exports = {
   entry: [path.resolve(__dirname, "client", "index.js")],
-  output: { path: path.resolve(__dirname, "build"), filename: "bundle.js" },
+  output: {
+    path: path.resolve(__dirname, "build"),
+    filename: "bundle.js",
+  },
   mode: process.env.NODE_ENV,
   devServer: {
     static: {
-      directory: path.resolve(__dirname, "build"),
+      directory: path.resolve(__dirname, "client"),
+      publicPath: "/build",
     },
-    proxy: { "/asdfasdf/**": "http://localhost:3000" },
+    proxy: { "/": "http://localhost:3000" },
   },
   module: {
     rules: [
