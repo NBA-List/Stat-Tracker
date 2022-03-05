@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Login from "./Login.js";
-import Dashboard from "./Dashboard.js";
+import Login from "../components/Login.js";
+import MainContainer from "./MainContainer.js";
 import { useState } from "react";
 
 // use useContext instead grab context from Login
@@ -13,8 +13,8 @@ const App = () => {
   // if not logged in, render this
   return (
     <>
-      {/* <Dashboard /> */}
       <Login />
+      <MainContainer />
       <p>Hello from App.js</p>
     </>
   );
