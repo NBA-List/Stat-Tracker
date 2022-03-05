@@ -1,11 +1,21 @@
 import React, { Component } from "react";
+import Login from "./Login.js";
+import Dashboard from "./Dashboard.js";
+import { useState } from "react";
 
-class App extends Component {
-  render() {
-    // if state is logged in, render dashboard component
-    // otherwise, render login component
-    return <p>Hello world</p>;
-  }
-}
+// use useContext instead grab context from Login
+// const [ loggedIn ] = useState('');
+
+// class App extends Component {
+const App = () => {
+  // if not logged in, render this
+  return (
+    <>
+      {/* <Dashboard /> */}
+      <Login />\{" "}
+    </>
+  );
+  // if logged in, render dashboard
+};
 
 export default App;
