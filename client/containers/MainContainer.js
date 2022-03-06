@@ -1,15 +1,17 @@
-import React, { Component } from "react";
-import Sidebar from "./Sidebar";
-import Dashboard from "./Dashboard";
+import React, { Component } from 'react';
+import Header from '../components/Header';
+import Sidebar from './Sidebar';
+import Dashboard from './Dashboard';
 
 class MainContainer extends Component {
   render() {
-    return(
+    return (
       <>
+        <Header />
         <Sidebar />
         <Dashboard />
       </>
-    )
+    );
   }
 }
 
