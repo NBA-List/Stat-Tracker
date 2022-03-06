@@ -1,13 +1,20 @@
 const path = require("path");
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
 const UserController = require("./controllers/UserController");
 const User = require(path.resolve(__dirname, "./models/UserModels"));
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const { OAuth2Client } = require("google-auth-library");
+const {OAuth2Client} = require("google-auth-library");
+const passport = require("passport");
+const authroutes = require("./routes/auth.route");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const {authenticateUser} = require('./controllers/UserController');
 
+dotenv.config();
+
+const app = express();
 const PORT = 3000;
 
 /**
@@ -20,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(passport.initialize());
 
 /**
  * handle requests for static files
@@ -35,9 +43,10 @@ app.get("/", (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
 });
 
-app.post("/", UserController.getJWT, (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
-});
+// app.post("/", UserController.getJWT, (req, res) => {
+//   return res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
+// });
+app.post("/", authenticateUser);
 
 /**
  * start server

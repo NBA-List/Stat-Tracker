@@ -1,44 +1,90 @@
-const path = require("path");
+// const path = require("path");
+// const User = require("../models/UserModels");
+// const {OAuth2Client} = require("google-auth-library");
+// const { Request, Response } = require("express");
+
 const User = require("../models/UserModels");
-const { OAuth2Client } = require("google-auth-library");
+const {OAuth2Client} = require("google-auth-library");
 
-const UserController = {
-  // Create a new user in the Database
-  // Their information will be sent in the request body
-  // This should send the created user
 
-  getJWT(req, res, next) {
-    const client = new OAuth2Client(process.env.CLIENT_ID);
-    async function verify() {
-      const ticket = await client.verifyIdToken({
-        idToken: req.body.credential,
-        audience: process.env.CLIENT_ID,
-      });
-      const payload = ticket.getPayload();
-      console.log(payload);
-      next();
-    }
-    verify();
-  },
+const googleClient = new OAuth2Client({
+  clientId: `${process.env.GOOGLE_CLIENT_ID}`,
+  clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
+});
 
-  createUser(req, res, next) {
-    User.create(
-      {
-        name: req.body.name,
-        favorited_teams: req.body.teams,
-        favorited_players: req.body.players,
-      },
-      (err, data) => {
-        if (err) {
-          return res.sendStatus(404);
-        }
-        console.log("here");
+const authenticateUser = async (req, res) => {
+  const {idToken} = req.body;
+  
+  const ticket = await googleClient.verifyIdToken({
+    idToken,
+    audience: `${process.env.GOOGLE_CLIENT_ID}`,
+  });
 
-        res.locals.createdUser = data;
-        return next();
-      }
-    );
-  },
+  const payload = ticket.getPayload();
+
+  let user = await User.findOne({email: payload.email});
+  if(!user) {
+    user = await new User({
+      email: payload?.email,
+      name: payload?.name,
+      profilePic: payload?.picture,
+    });
+
+    await user.save();
+  }
+
+  res.json({user, token});
 };
 
-module.exports = UserController;
+
+module.exports = {
+  authenticateUser
+};
+
+
+
+// const UserController = {
+//   // Create a new user in the Database
+//   // Their information will be sent in the request body
+//   // This should send the created user
+
+//   getJWT(req, res, next) {
+//     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+//     async function verify() {
+//       const ticket = await client.verifyIdToken({
+//         idToken: req.body.credential,
+//         audience: process.env.GOOGLE_CLIENT_ID,
+//       });
+//       console.log("req.body: ->");
+//       console.log(req.body);
+//       const payload = ticket.getPayload();
+//       console.log('req.body.credential: ->');
+//       console.log(req.body.credential);
+//       console.log('payload: -> ');
+//       console.log(payload);
+//       next();
+//     }
+//     verify();
+//   },
+
+//   createUser(req, res, next) {
+//     User.create(
+//       {
+//         name: req.body.name,
+//         favorited_teams: req.body.teams,
+//         favorited_players: req.body.players,
+//       },
+//       (err, data) => {
+//         if (err) {
+//           return res.sendStatus(404);
+//         }
+//         console.log("here");
+
+//         res.locals.createdUser = data;
+//         return next();
+//       }
+//     );
+//   },
+// };
+
+// module.exports = UserController;
