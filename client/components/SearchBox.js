@@ -2,14 +2,9 @@
 import React, { Component } from 'react';
 
 let teamPlayerVitals;
-const teamPlayerNames = [];
+let teamPlayerNames = [];
 
 class SearchBox extends Component {
-  constructor(props) {
-    super(props);
-    this.makePlayerDropdown = this.makePlayerDropdown.bind(this);
-  }
-
   componentDidMount() {
     fetch('https://api-nba-v1.p.rapidapi.com/teams', {
       headers: {
@@ -25,42 +20,38 @@ class SearchBox extends Component {
             nbaTeams.push([team.id, team.name]);
           }
         });
-
         this.makeTeamDropdown(nbaTeams);
       });
   }
 
-  getPlayers() {
+  getPlayers(e) {
     const teamId = document.getElementById('team-names').value;
     if (teamId === 'Choose') {
       document.getElementById('player-names').disabled = true;
       return;
     }
     document.getElementById('player-names').disabled = false;
-    fetch('https://api-nba-v1.p.rapidapi.com/players?team=6&season=2021', {
+    fetch(`https://api-nba-v1.p.rapidapi.com/players?team=${teamId}&season=2021`, {
       headers: {
         'x-rapidapi-host': 'api-nba-v1.p.rapidapi.com',
         'x-rapidapi-key': '76befa362emshbec67c1a0062f13p17e6b0jsn113a7fce6386',
       },
     })
       .then((data) => data.json())
-      .then((data) => {
-        teamPlayerVitals = data.response;
+      .then((data) => teamPlayerVitals = data.response)
+      .then(() => {
+        teamPlayerNames = [];
         teamPlayerVitals.forEach((player) => {
           teamPlayerNames.push([player.id, player.firstname.concat(' ', player.lastname)]);
         });
-        this.makePlayerDropdown(teamPlayerNames);
-      });
-  }
 
-  makePlayerDropdown(data) {
-    console.log('hi');
-    console.log(data);
-    data.forEach((player) => {
-      const option = document.createElement('option');
-      [option.value, option.innerText] = player;
-      document.getElementById('player-names').appendChild(option);
-    });
+        document.getElementById('player-names').innerHTML = '';
+        teamPlayerNames.forEach((player) => {
+          const option = document.createElement('option');
+          [option.value, option.innerText] = player;
+          document.getElementById('player-names').appendChild(option);
+        });
+      });
   }
 
   makeTeamDropdown(data) {
@@ -76,9 +67,8 @@ class SearchBox extends Component {
     return (
       <>
         <label htmlFor="team-names">Choose a team: </label>
-        <select onChange={this.getPlayers} name="team-names" id="team-names">
-          <option value="Choose" selected="selected">Choose a team:</option>
-          {teamPlayerNames}
+        <select onChange={(e) => this.getPlayers(e)} name="team-names" id="team-names" selected="selected">
+          <option value="Choose">Choose a team:</option>
         </select>
         <br />
         <label htmlFor="player-names">Choose a player: </label>
