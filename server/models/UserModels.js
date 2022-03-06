@@ -20,6 +20,14 @@ mongoose.connect(MONGO_URI, {
       type: String,
       required: true,
     },
+    email: {
+    type: String,
+    required: true,
+    },
+    profilePic: {
+    type: String,
+    default: "",
+    },
     favorited_teams: [String],
     favorited_players: [String],
   });
