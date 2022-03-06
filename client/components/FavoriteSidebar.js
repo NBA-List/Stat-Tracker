@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class FavoriteSidebar extends Component {
   render() {
-    return(<p></p>);
+    return (<p />);
   }
 }
 
