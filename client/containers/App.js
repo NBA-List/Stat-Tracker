@@ -3,6 +3,8 @@ import React, { Component, useState } from 'react';
 import Login from '../components/Login.js';
 import MainContainer from './MainContainer.js';
 import {Switch, Route} from 'react-router-dom';
+import GoogleLoginHook from '../components/GoogleLoginHook.js';
+import GoogleLogoutHook from '../components/GoogleLogoutHook.js';
 
 
 // use useContext instead grab context from Login
@@ -26,6 +28,8 @@ function App() {
     <>
       {/* if not logged in, render this */}
       {/* <Login /> */}
+      <GoogleLoginHook />
+      <GoogleLogoutHook />
       {/* if logged in, render dashboard */}
       <MainContainer
         favs={favs}
