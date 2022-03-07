@@ -1,11 +1,11 @@
 const path = require('path');
 const express = require('express');
-
 const app = express();
 const mongoose = require('mongoose');
-const UserController = require('./controllers/UserController');
 
-const User = require(path.resolve(__dirname, './models/UserModels'));
+const UserController = require('./controllers/UserController');
+const userRouter = require('./routers/userRouter');
+
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { OAuth2Client } = require('google-auth-library');
@@ -17,7 +17,6 @@ const PORT = 3000;
  */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -25,15 +24,17 @@ app.use(cookieParser());
 /**
  * handle requests for static files
  */
-app.get('/build', (req, res) => {
-});
 app.use(express.static(path.resolve(__dirname, '../build')));
 
-// Create a user in the database
-// http://localhost:3000/signup
-app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
+app.get('/', (req, res) =>
+  res.status(200).sendFile(path.join(__dirname, '../client/index.html'))
+);
 
-app.post('/', UserController.getJWT, (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
+app.use('/user', userRouter);
+
+app.post('/', UserController.getJWT, (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+});
 
 /**
  * start server

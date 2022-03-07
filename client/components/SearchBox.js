@@ -1,20 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
 
-let teamPlayerVitals;
-let teamPlayerNames = [];
-let allFavoritePlayerInfo = [];
-let that;
-
 class SearchBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { player: 'Jordan' };
-    const { allPlayerInfo } = this.props;
-    allFavoritePlayerInfo = allPlayerInfo;
-    that = this;
-  }
-
   componentDidMount() {
     fetch('https://api-nba-v1.p.rapidapi.com/teams', {
       headers: {
@@ -27,8 +14,8 @@ class SearchBox extends Component {
         const nbaTeams = [];
         data.response.forEach((team) => {
           if (
-            team.nbaFranchise === true
-            && team.name !== 'Home Team Stephen A'
+            team.nbaFranchise === true &&
+            team.name !== 'Home Team Stephen A'
           ) {
             nbaTeams.push([team.id, team.name]);
           }
@@ -37,7 +24,7 @@ class SearchBox extends Component {
       });
   }
 
-  getPlayers() {
+  getPlayers = () => {
     const teamId = document.getElementById('team-names').value;
     if (teamId === 'Choose') {
       document.getElementById('player-names').disabled = true;
@@ -48,12 +35,7 @@ class SearchBox extends Component {
     document.getElementById('player-names').disabled = false;
     document.getElementById('favorite-team').style.visibility = 'visible';
 
-    console.log(this);
     this.setPlayerButton();
-    // if (document.getElementById('player-names').value === 'Choose') {
-    //   document.getElementById('favorite-player').style.visibility = 'hidden';
-    // } else { document.getElementById('favorite-player').style.visibility = 'visible'; }
-    // end of setPlayerButton function
 
     fetch(
       `https://api-nba-v1.p.rapidapi.com/players?team=${teamId}&season=2021`,
@@ -62,63 +44,35 @@ class SearchBox extends Component {
           'x-rapidapi-host': process.env.host,
           'x-rapidapi-key': process.env.key,
         },
-      },
+      }
     )
       .then((data) => data.json())
       .then((data) => {
-        console.log(data);
-        teamPlayerVitals = data.response;
-        teamPlayerNames = [];
-        teamPlayerVitals.forEach((player) => {
-          teamPlayerNames.push([
+        const players = data.response;
+        const playerInfo = [];
+        players.forEach((player) => {
+          playerInfo.push([
             player.id,
             player.firstname.concat(' ', player.lastname),
           ]);
         });
-
-        document.getElementById('player-names').innerHTML = '';
-        teamPlayerNames.forEach((player) => {
+        document.getElementById('player-names').innerHTML =
+          '<option value="Choose">Choose a player:</option>';
+        playerInfo.forEach((player) => {
           const option = document.createElement('option');
           [option.value, option.innerText] = player;
           document.getElementById('player-names').appendChild(option);
         });
       });
-  }
+  };
 
-  setPlayerButton() {
-    console.log('hi');
+  setPlayerButton = () => {
     if (document.getElementById('player-names').value === 'Choose') {
       document.getElementById('favorite-player').style.visibility = 'hidden';
-    } else { document.getElementById('favorite-player').style.visibility = 'visible'; }
-    const playerID = document.getElementById('player-names').value;
-
-    // fetch(
-    //   `https://api-nba-v1.p.rapidapi.com/players/statistics?id=${playerID}&season=2021`,
-    //   {
-    //     headers: {
-    //       'x-rapidapi-host': process.env.host,
-    //       'x-rapidapi-key': process.env.key,
-    //     },
-    //   },
-    // )
-    //   .then((data) => data.json())
-    //   .then((data) => {
-    //     allFavoritePlayerInfo.push([playerID, data.response]);
-    //     // teamPlayerVitals.forEach((player) => {
-    //     //   teamPlayerNames.push([
-    //     //     player.id,
-    //     //     player.firstname.concat(' ', player.lastname),
-    //     //   ]);
-    //     // });
-
-    //     document.getElementById('player-names').innerHTML = '';
-    //     teamPlayerNames.forEach((player) => {
-    //       const option = document.createElement('option');
-    //       [option.value, option.innerText] = player;
-    //       document.getElementById('player-names').appendChild(option);
-    //     });
-    //   });
-  }
+    } else {
+      document.getElementById('favorite-player').style.visibility = 'visible';
+    }
+  };
 
   makeTeamDropdown(nbaTeams) {
     nbaTeams.forEach((team) => {
@@ -133,7 +87,7 @@ class SearchBox extends Component {
     const teamId = document.getElementById('team-names').value;
     fetch('/user/addTeam', {
       method: 'POST',
-      body: JSON.stringify(teamId),
+      body: JSON.stringify({ teamId: teamId }),
     })
       .then((data) => data.json())
       .then((data) => this.refreshTeams(data));
