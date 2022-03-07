@@ -1,13 +1,8 @@
 const path = require('path');
 const express = require('express');
-<<<<<<< HEAD
-const app = express();
 const mongoose = require('mongoose');
 
 const userRouter = require('./routers/userRouter');
-=======
-const mongoose = require('mongoose');
->>>>>>> 1edfeaa835b16189694caf46893c18644056fd56
 
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -17,11 +12,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const authroutes = require('./routes/auth.route');
 const UserController = require('./controllers/UserController');
-<<<<<<< Updated upstream
-=======
-
-dotenv.config();
->>>>>>> Stashed changes
 
 dotenv.config();
 
@@ -49,23 +39,9 @@ app.get('/', (req, res) =>
 
 app.use('/user', userRouter);
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-app.post('/', UserController.getJWT, (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
-});
-=======
 // Create a user in the database
 // handle google oauth
 app.post('/', UserController.authUser, (req, res) => res.status(200).json(res.locals));
->>>>>>> 1edfeaa835b16189694caf46893c18644056fd56
-=======
-// Create a user in the database
-// handle google oauth
-app.post('/', UserController.authUser, (req, res) =>
-  res.status(200).json(res.locals)
-);
->>>>>>> Stashed changes
 
 /**
  * start server
