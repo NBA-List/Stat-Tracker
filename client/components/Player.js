@@ -1,24 +1,28 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 
-const allFavInfoPromise = [];
-let that;
+const allFavsInPromise = [];
+function Player({
+  addFavs,
+  removeFavs,
+  favs,
+}) {
+  const playerStatCalc = () => {
+  };
 
-class Player extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    const { allPlayerInfo } = this.props;
-    that = this;
-  }
-
-  componentDidMount() {
-    console.log(this.state);
-    that.props.allPlayerInfo.forEach((favPlayer) => {
-      allFavInfoPromise.push(fetch(
-        `https://api-nba-v1.p.rapidapi.com/players/statistics?id=${favPlayer[0]}&season=2021`,
+  useEffect(() => {
+    favs.forEach((playerID) => {
+      allFavsInPromise.push(fetch(
+        `https://api-nba-v1.p.rapidapi.com/players/statistics?id=${playerID}&season=2021`,
+        {
+          headers: {
+            'x-rapidapi-host': process.env.host,
+            'x-rapidapi-key': process.env.key,
+          },
+        },
       ).then((res) => res.json()));
     });
-    const allData = Promise.all(allFavInfoPromise);
+
+    const allData = Promise.all(allFavsInPromise);
     allData.then((res) => console.log(res));
 
     // fetch('https://api-nba-v1.p.rapidapi.com/teams', {
@@ -40,22 +44,15 @@ class Player extends Component {
     //     });
     //     this.makeTeamDropdown(nbaTeams);
     //   });
-    this.playerStatCalc();
-  }
 
-  playerStatCalc() {
-    console.log('hi');
-    console.log(this.state);
-    console.log('hello');
-    console.log(this.props.allPlayerInfo);
-  }
+    playerStatCalc();
+  });
 
-  render() {
-    return (<p> </p>);
-  }
+  return (<p> </p>);
 
-  // const playerStats = this.state.allPlayerInfo.map((data, i) => {
-  //   return <Card data={data} key={`player-stat-${i}`} />;
+  // const playerStats = this.state.allPlayerInfo.map((data, i) => (
+  //   <FeedItem url={data} key={(i += "hello")} />
+  // ));
 }
 
 export default Player;

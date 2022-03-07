@@ -1,16 +1,41 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 
-function MainContainer({ allPlayerInfo }) {
+function MainContainer({
+  addFavs,
+  removeFavs,
+  favs,
+
+}) {
+  useEffect(() => {
+    console.log('in effect, ', favs);
+  }, [favs]);
   return (
     <>
       <Header />
-      <Sidebar allPlayerInfo={allPlayerInfo} />
-      <Dashboard allPlayerInfo={allPlayerInfo} />
+      {/* <button onClick={() => addFavs()}>
+        Click me
+        {' '}
+      </button>
+      <button onClick={() => removeFavs()}>
+        Click me
+        {' '}
+      </button> */}
+
+      <Sidebar
+        favs={favs}
+        addFavs={addFavs}
+        removeFavs={removeFavs}
+      />
+      <Dashboard
+        favs={favs}
+        addFavs={addFavs}
+        removeFavs={removeFavs}
+      />
     </>
   );
 }
