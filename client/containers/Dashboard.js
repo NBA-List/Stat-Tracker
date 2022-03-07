@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Team from '../components/Team';
 import Player from '../components/Player';
 import Login from '../components/Login';
+import GoogleLogin from 'react-google-login';
+import GoogleLoginHook from '../components/GoogleLoginHook';
 
 // const a = 
 // class Dashboard extends Component {
@@ -17,6 +19,7 @@ function Dashboard({ allPlayerInfo }) {
 return (
   <div id="dashboard">
     <Login />
+    <GoogleLoginHook />
     <Player allPlayerInfo={allPlayerInfo} />
     <Team />
     <p style={{ fontSize: '30px' }}>
