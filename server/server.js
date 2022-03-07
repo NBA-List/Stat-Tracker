@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 
 const userRouter = require('./routers/userRouter');
 
+const app = express();
+const mongoose = require('mongoose');
+
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { OAuth2Client } = require('google-auth-library');
@@ -15,7 +18,6 @@ const UserController = require('./controllers/UserController');
 
 dotenv.config();
 
-const app = express();
 const PORT = 3000;
 
 /**
@@ -42,6 +44,21 @@ app.use('/user', userRouter);
 // Create a user in the database
 // handle google oauth
 app.post('/', UserController.authUser, (req, res) => res.status(200).json(res.locals));
+
+app.post('/', UserController.getJWT, (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+});
+
+// Create a user in the database
+// handle google oauth
+app.post('/', UserController.authUser, (req, res) => res.status(200).json(res.locals));
+
+// Create a user in the database
+// handle google oauth
+app.post('/', UserController.authUser, (req, res) =>
+  res.status(200).json(res.locals)
+);
+
 
 /**
  * start server

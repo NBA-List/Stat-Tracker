@@ -18,6 +18,12 @@ import Login from '../components/Login';
       <div id="dashboard">
         <Login />
         <Player allPlayerInfo={allPlayerInfo} />
+class Dashboard extends Component {
+  render() {
+    return (
+      <div id="dashboard">
+        <Login />
+        <Player />
         <Team />
         <p style={{ fontSize: '30px' }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
@@ -105,5 +111,6 @@ import Login from '../components/Login';
     );
   }
 // }
+}
 
 export default Dashboard;
