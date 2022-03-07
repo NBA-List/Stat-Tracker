@@ -1,0 +1,22 @@
+import React, { Component, useState } from 'react';
+import Login from '../components/Login.js';
+import MainContainer from './MainContainer.js';
+
+// use useContext instead grab context from Login
+// const [ loggedIn ] = useState('');
+
+document.getElementById('client_id').content = process.env.CLIENT_ID;
+
+// class App extends Component {
+function App() {
+  return (
+    <>
+      {/* if not logged in, render this */}
+      {/* <Login /> */}
+      {/* if logged in, render dashboard */}
+      <MainContainer />
+    </>
+  );
+}
+
+export default App;
