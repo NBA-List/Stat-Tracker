@@ -3,8 +3,18 @@ import React, { Component } from 'react';
 
 let teamPlayerVitals;
 let teamPlayerNames = [];
+let allFavoritePlayerInfo = [];
+let that;
 
 class SearchBox extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { player: 'Jordan' };
+    const { allPlayerInfo } = this.props;
+    allFavoritePlayerInfo = allPlayerInfo;
+    that = this;
+  }
+
   componentDidMount() {
     fetch('https://api-nba-v1.p.rapidapi.com/teams', {
       headers: {
@@ -37,11 +47,12 @@ class SearchBox extends Component {
     }
     document.getElementById('player-names').disabled = false;
     document.getElementById('favorite-team').style.visibility = 'visible';
-    
-    // this.setPlayerButton(); => imported this function in order to activate, otherwise undefined
-    if (document.getElementById('player-names').value === 'Choose') {
-      document.getElementById('favorite-player').style.visibility = 'hidden';
-    } else { document.getElementById('favorite-player').style.visibility = 'visible'; }
+
+    console.log(this);
+    this.setPlayerButton();
+    // if (document.getElementById('player-names').value === 'Choose') {
+    //   document.getElementById('favorite-player').style.visibility = 'hidden';
+    // } else { document.getElementById('favorite-player').style.visibility = 'visible'; }
     // end of setPlayerButton function
 
     fetch(
@@ -55,6 +66,7 @@ class SearchBox extends Component {
     )
       .then((data) => data.json())
       .then((data) => {
+        console.log(data);
         teamPlayerVitals = data.response;
         teamPlayerNames = [];
         teamPlayerVitals.forEach((player) => {
@@ -74,22 +86,51 @@ class SearchBox extends Component {
   }
 
   setPlayerButton() {
+    console.log('hi');
     if (document.getElementById('player-names').value === 'Choose') {
       document.getElementById('favorite-player').style.visibility = 'hidden';
     } else { document.getElementById('favorite-player').style.visibility = 'visible'; }
+    const playerID = document.getElementById('player-names').value;
+
+    // fetch(
+    //   `https://api-nba-v1.p.rapidapi.com/players/statistics?id=${playerID}&season=2021`,
+    //   {
+    //     headers: {
+    //       'x-rapidapi-host': process.env.host,
+    //       'x-rapidapi-key': process.env.key,
+    //     },
+    //   },
+    // )
+    //   .then((data) => data.json())
+    //   .then((data) => {
+    //     allFavoritePlayerInfo.push([playerID, data.response]);
+    //     // teamPlayerVitals.forEach((player) => {
+    //     //   teamPlayerNames.push([
+    //     //     player.id,
+    //     //     player.firstname.concat(' ', player.lastname),
+    //     //   ]);
+    //     // });
+
+    //     document.getElementById('player-names').innerHTML = '';
+    //     teamPlayerNames.forEach((player) => {
+    //       const option = document.createElement('option');
+    //       [option.value, option.innerText] = player;
+    //       document.getElementById('player-names').appendChild(option);
+    //     });
+    //   });
   }
 
-  makeTeamDropdown(data) {
-    data.forEach((team) => {
+  makeTeamDropdown(nbaTeams) {
+    nbaTeams.forEach((team) => {
       const option = document.createElement('option');
       [option.value, option.innerText] = team;
       document.getElementById('team-names').appendChild(option);
     });
   }
 
+  // add favorited team to database
   addFavoriteTeam() {
     const teamId = document.getElementById('team-names').value;
-    console.log(teamId);
     fetch('/user/addTeam', {
       method: 'POST',
       body: JSON.stringify(teamId),
@@ -102,6 +143,7 @@ class SearchBox extends Component {
     console.log(teams);
   }
 
+  // add favorited player to database
   addFavoritePlayer() {
     const playerId = document.getElementById('player-names').value;
     console.log(playerId);
@@ -133,7 +175,7 @@ class SearchBox extends Component {
         <br />
         <label htmlFor="player-names">Choose a player: </label>
         <select
-          // onChange={this.setPlayerButton}
+          onChange={this.setPlayerButton}
           name="player-names"
           disabled
           id="player-names"
