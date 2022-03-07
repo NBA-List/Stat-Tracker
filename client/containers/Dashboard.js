@@ -3,6 +3,21 @@ import Team from '../components/Team';
 import Player from '../components/Player';
 import Login from '../components/Login';
 
+// const a = 
+// class Dashboard extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = { player: 'Jordan' };
+//     const { allPlayerInfo } = this.props;
+//   }
+
+//   render() {
+//     return (
+  function Dashboard({ allPlayerInfo }) {
+  return (
+      <div id="dashboard">
+        <Login />
+        <Player allPlayerInfo={allPlayerInfo} />
 class Dashboard extends Component {
   render() {
     return (
@@ -95,6 +110,7 @@ class Dashboard extends Component {
       </div>
     );
   }
+// }
 }
 
 export default Dashboard;
