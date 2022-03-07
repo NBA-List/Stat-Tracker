@@ -85,9 +85,8 @@ class SearchBox extends Component {
   // add favorited team to database
   addFavoriteTeam() {
     const teamId = document.getElementById('team-names').value;
-    fetch('/user/addTeam', {
+    fetch('/user/addTeam/' + teamId, {
       method: 'POST',
-      body: JSON.stringify({ teamId: teamId }),
     })
       .then((data) => data.json())
       .then((data) => this.refreshTeams(data));

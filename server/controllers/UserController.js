@@ -45,7 +45,9 @@ const UserController = {
   },
 
   addTeam(req, res, next) {
+    console.log('hi');
     console.log(req.body);
+    console.log(req.params);
     const { teamId } = req.body;
     const query = {};
     query.favorited_teams = teamId;
