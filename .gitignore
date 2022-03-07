@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+node_modules
+build
+.env
+=======
 # I JUST PULLED A NODE GITINGORE TEMPLATE FROM GITHUB
 Skip to content
 Product 
@@ -171,3 +176,8 @@ Training
 Blog
 About
 Loading complete
+<<<<<<< Updated upstream
+>>>>>>> 1edfeaa835b16189694caf46893c18644056fd56
+=======
+>>>>>>> main
+>>>>>>> Stashed changes
