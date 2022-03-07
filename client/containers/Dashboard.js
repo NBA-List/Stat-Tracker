@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import Team from '../components/Team';
 import Player from '../components/Player';
+import Login from '../components/Login';
 
 function Dashboard({
   addFavs,

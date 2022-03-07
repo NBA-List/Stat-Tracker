@@ -1,11 +1,6 @@
-import React, { Component } from "react";
+import React from 'react';
 
-const handleCredentialResponse = (e) => {
-  console.log("inside handleCred login.js");
-};
-
-// class Login extends Component {
-const Login = () => {
+function Login() {
   return (
     <div id="sign-in">
       <div
@@ -14,7 +9,7 @@ const Login = () => {
         data-login_uri="http://localhost:3000"
         data-auto_prompt="false"
         data-callback="handleCredentialResponse"
-      ></div>
+      />
       <div
         className="g_id_signin"
         data-type="standard"
@@ -23,10 +18,9 @@ const Login = () => {
         data-text="sign_in_with"
         data-shape="rectangular"
         data-logo_alignment="left"
-      ></div>
+      />
     </div>
   );
-  //   }
-};
+}
 
 export default Login;

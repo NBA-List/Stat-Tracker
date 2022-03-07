@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production node server/server.js",
     "build": "webpack",
     "dev": "NODE_ENV=development webpack serve --open & nodemon server/server.js",
-    "format": "prettier --write \"client/**/*.{js,jsx}\"",
+    "format": "prettier --write \"server/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
   },
   "repository": {
@@ -17,19 +17,30 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.7",
+    "convict": "^6.2.1",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "dotenv-webpack": "^7.1.0",
     "express": "^4.17.3",
+    "express-validator": "^6.14.0",
     "fs": "^0.0.1-security",
     "google-auth-library": "^7.14.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.4",
     "node-postgres": "^0.6.2",
+    "passport": "^0.5.2",
+    "passport-google-oauth": "^2.0.0",
+    "passport-jwt": "^4.0.0",
     "pg": "^8.7.3",
     "prettier": "^2.5.1",
     "quickchart-js": "^3.0.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-google-login": "^5.2.2",
+    "react-router-dom": "^6.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",

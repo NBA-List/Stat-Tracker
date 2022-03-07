@@ -30,8 +30,8 @@ function SearchBox({
         const nbaTeams = [];
         data.response.forEach((team) => {
           if (
-            team.nbaFranchise === true
-            && team.name !== 'Home Team Stephen A'
+            team.nbaFranchise === true &&
+            team.name !== 'Home Team Stephen A'
           ) {
             nbaTeams.push([team.id, team.name]);
           }
@@ -58,7 +58,7 @@ function SearchBox({
           'x-rapidapi-host': process.env.host,
           'x-rapidapi-key': process.env.key,
         },
-      },
+      }
     )
       .then((data) => data.json())
       .then((data) => {
@@ -70,9 +70,9 @@ function SearchBox({
             player.firstname.concat(' ', player.lastname),
           ]);
         });
-
-        document.getElementById('player-names').innerHTML = '';
-        teamPlayerNames.forEach((player) => {
+        document.getElementById('player-names').innerHTML =
+          '<option value="Choose">Choose a player:</option>';
+        playerInfo.forEach((player) => {
           const option = document.createElement('option');
           [option.value, option.innerText] = player;
           document.getElementById('player-names').appendChild(option);
@@ -80,38 +80,12 @@ function SearchBox({
       });
   };
 
-  const setPlayerButton = () => {
+  setPlayerButton = () => {
     if (document.getElementById('player-names').value === 'Choose') {
       document.getElementById('favorite-player').style.visibility = 'hidden';
-    } else { document.getElementById('favorite-player').style.visibility = 'visible'; }
-    // const playerID = document.getElementById('player-names').value;
-
-    // fetch(
-    //   `https://api-nba-v1.p.rapidapi.com/players/statistics?id=${playerID}&season=2021`,
-    //   {
-    //     headers: {
-    //       'x-rapidapi-host': process.env.host,
-    //       'x-rapidapi-key': process.env.key,
-    //     },
-    //   },
-    // )
-    //   .then((data) => data.json())
-    //   .then((data) => {
-    //     allFavoritePlayerInfo.push([playerID, data.response]);
-    //     // teamPlayerVitals.forEach((player) => {
-    //     //   teamPlayerNames.push([
-    //     //     player.id,
-    //     //     player.firstname.concat(' ', player.lastname),
-    //     //   ]);
-    //     // });
-
-    //     document.getElementById('player-names').innerHTML = '';
-    //     teamPlayerNames.forEach((player) => {
-    //       const option = document.createElement('option');
-    //       [option.value, option.innerText] = player;
-    //       document.getElementById('player-names').appendChild(option);
-    //     });
-    //   });
+    } else {
+      document.getElementById('favorite-player').style.visibility = 'visible';
+    }
   };
 
   const refreshTeams = (teams) => {
@@ -121,9 +95,8 @@ function SearchBox({
   // add favorited team to database
   const addFavoriteTeam = () => {
     const teamId = document.getElementById('team-names').value;
-    fetch('/user/addTeam', {
+    fetch('/user/addTeam/' + teamId, {
       method: 'POST',
-      body: JSON.stringify(teamId),
     })
       .then((data) => data.json())
       .then((data) => refreshTeams(data));
