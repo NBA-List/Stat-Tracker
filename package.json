@@ -74,5 +74,8 @@
   "bugs": {
     "url": "https://github.com/aidenblinn/Stat-Tracker/issues"
   },
-  "homepage": "https://github.com/aidenblinn/Stat-Tracker#readme"
+  "homepage": "https://github.com/aidenblinn/Stat-Tracker#readme",
+  "browserslist": [
+    "last 2 Chrome versions"
+  ]
 }
