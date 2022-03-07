@@ -3,19 +3,11 @@ import React, { Component } from 'react';
 import SearchBox from '../components/SearchBox';
 import Favorites from '../components/Favorites';
 
-function Sidebar({
-  addFavs,
-  removeFavs,
-  favs,
-}) {
+function Sidebar({ favsPlayer, favsTeam, setFavsPlayer, setFavsTeam }) {
   return (
     <div id="sidebar">
-      <SearchBox
-        favs={favs}
-        addFavs={addFavs}
-        removeFavs={removeFavs}
-      />
-      <Favorites />
+      <SearchBox setFavsPlayer={setFavsPlayer} setFavsTeam={setFavsTeam} />
+      <Favorites favsPlayer={favsPlayer} favsTeam={favsTeam} />
     </div>
   );
 }

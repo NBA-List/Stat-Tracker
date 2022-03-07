@@ -3,13 +3,8 @@ import React, { Component, useEffect } from 'react';
 
 let teamPlayerVitals;
 let teamPlayerNames = [];
-const allFavoritePlayerInfo = [];
 
-function SearchBox({
-  addFavs,
-  removeFavs,
-  favs,
-}) {
+function SearchBox({ setFavsPlayer, setFavsTeam }) {
   const makeTeamDropdown = (nbaTeams) => {
     nbaTeams.forEach((team) => {
       const option = document.createElement('option');
@@ -18,11 +13,17 @@ function SearchBox({
     });
   };
 
+  // generates random key
+  const getRandomKey = () => {
+    const keys = process.env.keys.split(' ');
+    return keys[Math.floor(Math.random() * keys.length)];
+  };
+
   useEffect(() => {
     fetch('https://api-nba-v1.p.rapidapi.com/teams', {
       headers: {
         'x-rapidapi-host': process.env.host,
-        'x-rapidapi-key': process.env.key,
+        'x-rapidapi-key': getRandomKey(),
       },
     })
       .then((data) => data.json())
@@ -38,7 +39,7 @@ function SearchBox({
         });
         makeTeamDropdown(nbaTeams);
       });
-  });
+  }, []);
 
   const getPlayers = () => {
     const teamId = document.getElementById('team-names').value;
@@ -56,7 +57,7 @@ function SearchBox({
       {
         headers: {
           'x-rapidapi-host': process.env.host,
-          'x-rapidapi-key': process.env.key,
+          'x-rapidapi-key': getRandomKey(),
         },
       }
     )
@@ -72,7 +73,7 @@ function SearchBox({
         });
         document.getElementById('player-names').innerHTML =
           '<option value="Choose">Choose a player:</option>';
-        playerInfo.forEach((player) => {
+        teamPlayerNames.forEach((player) => {
           const option = document.createElement('option');
           [option.value, option.innerText] = player;
           document.getElementById('player-names').appendChild(option);
@@ -88,34 +89,25 @@ function SearchBox({
     }
   };
 
-  const refreshTeams = (teams) => {
-    console.log(teams);
-  };
-
-  // add favorited team to database
+  // add favorited team to database and set state
   const addFavoriteTeam = () => {
     const teamId = document.getElementById('team-names').value;
     fetch('/user/addTeam/' + teamId, {
       method: 'POST',
     })
       .then((data) => data.json())
-      .then((data) => refreshTeams(data));
+      .then((data) => setFavsTeam(data.teams));
   };
 
-  const refreshPlayers = (players) => {
-    console.log(players);
-  };
-
-  // add favorited player to database
+  // add favorited player to database and set state
   const addFavoritePlayer = () => {
     const playerId = document.getElementById('player-names').value;
-    addFavs(playerId);
-    fetch('/user/addPlayer', {
+    fetch('/user/addPlayer/' + playerId, {
       method: 'POST',
       body: JSON.stringify(playerId),
     })
       .then((data) => data.json())
-      .then((data) => refreshPlayers(data));
+      .then((data) => setFavsPlayer(data.players));
   };
 
   return (
@@ -139,7 +131,7 @@ function SearchBox({
         id="player-names"
       >
         <option value="Choose">Choose a player:</option>
-        <option value="test2">Test2</option>
+        <option value="test3">Test2</option>
       </select>
       <input
         type="button"

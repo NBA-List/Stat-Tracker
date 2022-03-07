@@ -14,6 +14,11 @@
     "type": "git",
     "url": "git+https://github.com/aidenblinn/Stat-Tracker.git"
   },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -22,6 +27,7 @@
     "convict": "^6.2.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "crypto-browserify": "^3.12.0",
     "dotenv": "^16.0.0",
     "dotenv-webpack": "^7.1.0",
     "express": "^4.17.3",
