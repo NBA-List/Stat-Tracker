@@ -16,6 +16,14 @@ module.exports = {
     },
     proxy: { '/': 'http://localhost:3000' },
   },
+  resolve: {
+    modules: [__dirname, 'src', 'node_modules'],
+    fallback: {
+      crypto: false,
+      'crypto-browserify': require.resolve('crypto-browserify'),
+    },
+    extensions: ['*', '.js', '.jsx', '.tsx', '.ts'],
+  },
   module: {
     rules: [
       {

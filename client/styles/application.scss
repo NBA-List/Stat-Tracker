@@ -4,11 +4,16 @@ $sidebar-width: 300px;
 body {
   overscroll-behavior: none;
   margin: 0px;
+  background: pink;
 }
 
 #sign-in {
   margin: auto;
   width: fit-content;
+}
+
+.logo {
+  height: 60px;
 }
 
 #header {
@@ -46,8 +51,8 @@ body {
   position: fixed;
   top: $header-height;
   left: $sidebar-width;
-  overflow-y: scroll;
-  width: 100%;
-  height: 100%;
+  overflow-y: auto;
+  width: calc(100vw - $sidebar-width);
+  height: calc(100% - $header-height);
   background: pink;
 }

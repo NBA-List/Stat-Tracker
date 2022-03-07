@@ -5,36 +5,21 @@ import Header from '../components/Header';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 
-function MainContainer({
-  addFavs,
-  removeFavs,
-  favs,
-
-}) {
-  useEffect(() => {
-    console.log('in effect, ', favs);
-  }, [favs]);
+function MainContainer({ favsPlayer, favsTeam, setFavsPlayer, setFavsTeam }) {
   return (
     <>
       <Header />
-      {/* <button onClick={() => addFavs()}>
-        Click me
-        {' '}
-      </button>
-      <button onClick={() => removeFavs()}>
-        Click me
-        {' '}
-      </button> */}
-
       <Sidebar
-        favs={favs}
-        addFavs={addFavs}
-        removeFavs={removeFavs}
+        favsPlayer={favsPlayer}
+        favsTeam={favsTeam}
+        setFavsPlayer={setFavsPlayer}
+        setFavsTeam={setFavsTeam}
       />
       <Dashboard
-        favs={favs}
-        addFavs={addFavs}
-        removeFavs={removeFavs}
+        favsPlayer={favsPlayer}
+        favsTeam={favsTeam}
+        setFavsPlayer={setFavsPlayer}
+        setFavsTeam={setFavsTeam}
       />
     </>
   );

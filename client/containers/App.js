@@ -14,16 +14,9 @@ document.getElementById('client_id').content = process.env.CLIENT_ID;
 
 // class App extends Component {
 function App() {
-  const [favs, setFavs] = useState([]);
-  const addFavs = (playerID) => {
-    setFavs((oldFavs) => [...oldFavs, Number(playerID)]);
-  };
-  const removeFavs = (playerID) => {
-    setFavs(((oldFavs) => {
-      console.log(oldFavs);
-      return oldFavs.filter((player) => Number(player) !== Number(playerID));
-    }));
-  };
+  const [favsPlayer, setFavsPlayer] = useState([]);
+  const [favsTeam, setFavsTeam] = useState([]);
+
   return (
     <>
       {/* if not logged in, render this */}
@@ -32,9 +25,10 @@ function App() {
       <GoogleLogoutHook />
       {/* if logged in, render dashboard */}
       <MainContainer
-        favs={favs}
-        addFavs={addFavs}
-        removeFavs={removeFavs}
+        favsPlayer={favsPlayer}
+        favsTeam={favsTeam}
+        setFavsPlayer={setFavsPlayer}
+        setFavsTeam={setFavsTeam}
       />
     </>
   );
