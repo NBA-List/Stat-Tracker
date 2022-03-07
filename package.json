@@ -7,14 +7,13 @@
     "start": "NODE_ENV=production node server/server.js",
     "build": "webpack",
     "dev": "NODE_ENV=development webpack serve --open & nodemon server/server.js",
-    "format": "prettier --write \"client/**/*.{js,jsx}\"",
+    "format": "prettier --write \"server/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aidenblinn/Stat-Tracker.git"
   },
-
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -38,7 +37,8 @@
     "prettier": "^2.5.1",
     "quickchart-js": "^3.0.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-google-login": "^5.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
