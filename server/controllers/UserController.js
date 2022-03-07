@@ -1,80 +1,66 @@
-// const path = require("path");
-// const User = require("../models/UserModels");
-// const {OAuth2Client} = require("google-auth-library");
-// const { Request, Response } = require("express");
-
 const User = require("../models/UserModels");
-const {OAuth2Client} = require("google-auth-library");
+const { OAuth2Client } = require("google-auth-library");
 
-// const userController = {}
-
-// const googleClient = new OAuth2Client({
-//   clientId: `${process.env.GOOGLE_CLIENT_ID}`,
-//   clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
-// });
-
-// const authenticateUser = async (req, res) => {
-//   const {idToken} = req.body;
-  
-//   const ticket = await googleClient.verifyIdToken({
-//     idToken,
-//     audience: `${process.env.GOOGLE_CLIENT_ID}`,
-//   });
-
-// };
-
-
-// module.exports = {
-//   authenticateUser
-// };
-
-
+const CLIENT_ID = process.env.CLIENT_ID;
+const client = new OAuth2Client(CLIENT_ID);
 
 const UserController = {
   // Create a new user in the Database
   // Their information will be sent in the request body
-  // This should send the created user
+  // This should send the created user back to the client
 
-  getJWT(req, res, next) {
-    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-    async function verify() {
+  authUser: async (req, res, next) => {
+    try {
+      // pul JWT from the request header
+      const { credential } = req.body;
+
+      // use the JWT to get the user's profile from Google
       const ticket = await client.verifyIdToken({
-        idToken: req.body.credential,
-        audience: process.env.GOOGLE_CLIENT_ID,
+        // pass the JWT to verify
+        idToken: credential,
+        audience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
+        requiredAudience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
       });
-      console.log("req.body: ->");
-      console.log(req.body);
+
+      // get the user's profile from Google
       const payload = ticket.getPayload();
-      console.log('req.body.credential: ->');
-      console.log(req.body.credential);
-      console.log('payload: -> ');
-      console.log(payload);
-      // next();
-      return res.status(200).send(payload);
-    }
-    verify();
+      // pull the user's profile information from the profile
+      const { name, email, picture } = payload;
 
-
-  },
-
-  createUser(req, res, next) {
-    User.create(
-      {
-        name: req.body.name,
-        favorited_teams: req.body.teams,
-        favorited_players: req.body.players,
-      },
-      (err, data) => {
-        if (err) {
-          return res.sendStatus(404);
-        }
-        console.log("here");
-
-        res.locals.createdUser = data;
-        return next();
+      // check if the user is already in our database
+      let user = await User.findOne({ email });
+      if (!user) {
+        // create a new user if the user is not in our database
+        user = await User.create({ name, email, picture });
       }
-    );
+
+      // send the user back to the client
+      res.locals.user = user;
+      res.locals.credential = credential;
+      next();
+    } catch (err) {
+      next(err);
+    }
   },
 };
+//   createUser(req, res, next) {
+//     User.create(
+//       {
+//         name: req.body.name,
+//         favorited_teams: req.body.teams,
+//         favorited_players: req.body.players,
+//       },
+//       (err, data) => {
+//         if (err) {
+//           return res.sendStatus(404);
+//         }
+//         console.log("here");
+
+//         res.locals.createdUser = data;
+//         return next();
+//       }
+//     );
+//   },
+// };
 
 module.exports = UserController;

@@ -5,12 +5,11 @@ const UserController = require("./controllers/UserController");
 const User = require(path.resolve(__dirname, "./models/UserModels"));
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const {OAuth2Client} = require("google-auth-library");
+const { OAuth2Client } = require("google-auth-library");
 const passport = require("passport");
 const authroutes = require("./routes/auth.route");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const {authenticateUser} = require('./controllers/UserController');
 
 dotenv.config();
 
@@ -43,10 +42,11 @@ app.get("/", (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
 });
 
-app.post("/", UserController.getJWT, (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
+// Create a user in the database
+// handle google oauth
+app.post("/", UserController.authUser, (req, res) => {
+  return res.status(200).json(res.locals);
 });
-// app.post("/", authenticateUser);
 
 /**
  * start server
