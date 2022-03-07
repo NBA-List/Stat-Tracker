@@ -1,21 +1,24 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 
 let teamPlayerVitals;
 let teamPlayerNames = [];
-let allFavoritePlayerInfo = [];
-let that;
+const allFavoritePlayerInfo = [];
 
-class SearchBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { player: 'Jordan' };
-    const { allPlayerInfo } = this.props;
-    allFavoritePlayerInfo = allPlayerInfo;
-    that = this;
-  }
+function SearchBox({
+  addFavs,
+  removeFavs,
+  favs,
+}) {
+  const makeTeamDropdown = (nbaTeams) => {
+    nbaTeams.forEach((team) => {
+      const option = document.createElement('option');
+      [option.value, option.innerText] = team;
+      document.getElementById('team-names').appendChild(option);
+    });
+  };
 
-  componentDidMount() {
+  useEffect(() => {
     fetch('https://api-nba-v1.p.rapidapi.com/teams', {
       headers: {
         'x-rapidapi-host': process.env.host,
@@ -33,11 +36,11 @@ class SearchBox extends Component {
             nbaTeams.push([team.id, team.name]);
           }
         });
-        this.makeTeamDropdown(nbaTeams);
+        makeTeamDropdown(nbaTeams);
       });
-  }
+  });
 
-  getPlayers() {
+  const getPlayers = () => {
     const teamId = document.getElementById('team-names').value;
     if (teamId === 'Choose') {
       document.getElementById('player-names').disabled = true;
@@ -47,13 +50,6 @@ class SearchBox extends Component {
     }
     document.getElementById('player-names').disabled = false;
     document.getElementById('favorite-team').style.visibility = 'visible';
-
-    console.log(this);
-    this.setPlayerButton();
-    // if (document.getElementById('player-names').value === 'Choose') {
-    //   document.getElementById('favorite-player').style.visibility = 'hidden';
-    // } else { document.getElementById('favorite-player').style.visibility = 'visible'; }
-    // end of setPlayerButton function
 
     fetch(
       `https://api-nba-v1.p.rapidapi.com/players?team=${teamId}&season=2021`,
@@ -66,7 +62,6 @@ class SearchBox extends Component {
     )
       .then((data) => data.json())
       .then((data) => {
-        console.log(data);
         teamPlayerVitals = data.response;
         teamPlayerNames = [];
         teamPlayerVitals.forEach((player) => {
@@ -83,14 +78,13 @@ class SearchBox extends Component {
           document.getElementById('player-names').appendChild(option);
         });
       });
-  }
+  };
 
-  setPlayerButton() {
-    console.log('hi');
+  const setPlayerButton = () => {
     if (document.getElementById('player-names').value === 'Choose') {
       document.getElementById('favorite-player').style.visibility = 'hidden';
     } else { document.getElementById('favorite-player').style.visibility = 'visible'; }
-    const playerID = document.getElementById('player-names').value;
+    // const playerID = document.getElementById('player-names').value;
 
     // fetch(
     //   `https://api-nba-v1.p.rapidapi.com/players/statistics?id=${playerID}&season=2021`,
@@ -118,88 +112,78 @@ class SearchBox extends Component {
     //       document.getElementById('player-names').appendChild(option);
     //     });
     //   });
-  }
+  };
 
-  makeTeamDropdown(nbaTeams) {
-    nbaTeams.forEach((team) => {
-      const option = document.createElement('option');
-      [option.value, option.innerText] = team;
-      document.getElementById('team-names').appendChild(option);
-    });
-  }
+  const refreshTeams = (teams) => {
+    console.log(teams);
+  };
 
   // add favorited team to database
-  addFavoriteTeam() {
+  const addFavoriteTeam = () => {
     const teamId = document.getElementById('team-names').value;
     fetch('/user/addTeam', {
       method: 'POST',
       body: JSON.stringify(teamId),
     })
       .then((data) => data.json())
-      .then((data) => this.refreshTeams(data));
-  }
+      .then((data) => refreshTeams(data));
+  };
 
-  refreshTeams(teams) {
-    console.log(teams);
-  }
+  const refreshPlayers = (players) => {
+    console.log(players);
+  };
 
   // add favorited player to database
-  addFavoritePlayer() {
+  const addFavoritePlayer = () => {
     const playerId = document.getElementById('player-names').value;
-    console.log(playerId);
+    addFavs(playerId);
     fetch('/user/addPlayer', {
       method: 'POST',
       body: JSON.stringify(playerId),
     })
       .then((data) => data.json())
-      .then((data) => this.refreshPlayers(data));
-  }
+      .then((data) => refreshPlayers(data));
+  };
 
-  refreshPlayers(players) {
-    console.log(players);
-  }
-
-  render() {
-    return (
-      <div id="search-bar">
-        <label htmlFor="team-names">Choose a team: </label>
-        <select
-          onChange={this.getPlayers}
-          name="team-names"
-          id="team-names"
-          selected="selected"
-        >
-          <option value="Choose">Choose a team:</option>
-          <option value="test1">Test1</option>
-        </select>
-        <br />
-        <label htmlFor="player-names">Choose a player: </label>
-        <select
-          onChange={this.setPlayerButton}
-          name="player-names"
-          disabled
-          id="player-names"
-        >
-          <option value="Choose">Choose a player:</option>
-          <option value="test2">Test2</option>
-        </select>
-        <input
-          type="button"
-          onClick={this.addFavoriteTeam}
-          value="Favorite team"
-          style={{ visibility: 'hidden' }}
-          id="favorite-team"
-        />
-        <input
-          type="button"
-          onClick={this.addFavoritePlayer}
-          value="Favorite player"
-          style={{ visibility: 'hidden' }}
-          id="favorite-player"
-        />
-      </div>
-    );
-  }
+  return (
+    <div id="search-bar">
+      <label htmlFor="team-names">Choose a team: </label>
+      <select
+        onChange={getPlayers}
+        name="team-names"
+        id="team-names"
+        selected="selected"
+      >
+        <option value="Choose">Choose a team:</option>
+        <option value="test1">Test1</option>
+      </select>
+      <br />
+      <label htmlFor="player-names">Choose a player: </label>
+      <select
+        onChange={setPlayerButton}
+        name="player-names"
+        disabled
+        id="player-names"
+      >
+        <option value="Choose">Choose a player:</option>
+        <option value="test2">Test2</option>
+      </select>
+      <input
+        type="button"
+        onClick={addFavoriteTeam}
+        value="Favorite team"
+        style={{ visibility: 'hidden' }}
+        id="favorite-team"
+      />
+      <input
+        type="button"
+        onClick={addFavoritePlayer}
+        value="Favorite player"
+        style={{ visibility: 'hidden' }}
+        id="favorite-player"
+      />
+    </div>
+  );
 }
 
 export default SearchBox;

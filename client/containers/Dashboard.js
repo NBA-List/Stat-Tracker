@@ -1,14 +1,26 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/prefer-stateless-function */
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import Team from '../components/Team';
 import Player from '../components/Player';
 
-function Dashboard({ allPlayerInfo }) {
+function Dashboard({
+  addFavs,
+  removeFavs,
+  favs,
+}) {
   return (
     <div id="dashboard">
-      <Player allPlayerInfo={allPlayerInfo} />
-      <Team />
+      <Player
+        favs={favs}
+        addFavs={addFavs}
+        removeFavs={removeFavs}
+      />
+      <Team
+        favs={favs}
+        addFavs={addFavs}
+        removeFavs={removeFavs}
+      />
       <p style={{ fontSize: '30px' }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
         consequat lobortis lacus a condimentum. Fusce et viverra dui. In
