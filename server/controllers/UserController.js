@@ -17,13 +17,6 @@ const UserController = {
       // pul JWT from the request header
       const { credential } = req.body;
 
-
-
-  authUser: async (req, res, next) => {
-    try {
-      // pul JWT from the request header
-      const { credential } = req.body;
-
       // use the JWT to get the user's profile from Google
       const ticket = await client.verifyIdToken({
         // pass the JWT to verify
@@ -36,6 +29,8 @@ const UserController = {
       const payload = ticket.getPayload();
       // pull the user's profile information from the profile
       const { name, email, picture } = payload;
+    }
+  },
 
   createUser(req, res, next) {
     User.create(
@@ -148,24 +143,5 @@ const UserController = {
     });
   },
 };
-//   createUser(req, res, next) {
-//     User.create(
-//       {
-//         name: req.body.name,
-//         favorited_teams: req.body.teams,
-//         favorited_players: req.body.players,
-//       },
-//       (err, data) => {
-//         if (err) {
-//           return res.sendStatus(404);
-//         }
-//         console.log("here");
-
-//         res.locals.createdUser = data;
-//         return next();
-//       }
-//     );
-//   },
-// };
 
 module.exports = UserController;
