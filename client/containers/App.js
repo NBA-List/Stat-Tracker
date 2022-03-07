@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import React, { Component, useState } from 'react';
 import Login from '../components/Login.js';
 import MainContainer from './MainContainer.js';
@@ -14,7 +15,7 @@ function App() {
       {/* if not logged in, render this */}
       {/* <Login /> */}
       {/* if logged in, render dashboard */}
-      <MainContainer />
+      <MainContainer allPlayerInfo={[]} />
     </>
   );
 }

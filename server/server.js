@@ -20,7 +20,6 @@ const PORT = 3000;
 /**
  * handle parsing request body
  */
-console.log('hi');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -33,7 +32,6 @@ app.use(passport.initialize());
  * handle requests for static files
  */
 app.get('/build', (req, res) => {
-  console.log('hi');
 });
 app.use(express.static(path.resolve(__dirname, '../build')));
 
