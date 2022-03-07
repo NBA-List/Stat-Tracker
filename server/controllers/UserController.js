@@ -1,7 +1,7 @@
-const User = require("../models/UserModels");
-const { OAuth2Client } = require("google-auth-library");
+const { OAuth2Client } = require('google-auth-library');
+const User = require('../models/UserModels');
 
-const CLIENT_ID = process.env.CLIENT_ID;
+const { CLIENT_ID } = process.env;
 const client = new OAuth2Client(CLIENT_ID);
 
 const UserController = {

@@ -1,18 +1,4 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <div id="root"></div>
-    <p>hi from html</p>
-    <script src="build/bundle.js"></script>
-    <meta id="client_id" name="google-signin-client_id" content="%CLIENT_ID%" />
-    <script>
-      function onSignIn(googleUser) {
+<html lang="en"><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Document</title><script defer="defer" src="bundle.js"></script></head><body><script src="https://accounts.google.com/gsi/client" async defer="defer"></script><div id="root"></div><p>hi from html</p><script src="build/bundle.js"></script><p>after bundle hello</p><meta id="client_id" name="google-signin-client_id" content="%CLIENT_ID%"/><script>function onSignIn(googleUser) {
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
         console.log("ID: " + profile.getId()); // Don't send this directly to your server!
@@ -25,7 +11,4 @@
         // The ID token you need to pass to your backend:
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
-      }
-    </script>
-  </body>
-</html>
+      }</script></body></html>
