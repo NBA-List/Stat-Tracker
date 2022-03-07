@@ -80,7 +80,7 @@ function SearchBox({
       });
   };
 
-  setPlayerButton = () => {
+  const setPlayerButton = () => {
     if (document.getElementById('player-names').value === 'Choose') {
       document.getElementById('favorite-player').style.visibility = 'hidden';
     } else {
