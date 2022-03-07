@@ -3,11 +3,10 @@ const userController = require('../controllers/UserController');
 const router = express.Router();
 
 router.post(
-  '/addTeam',
+  '/addTeam/:id',
   userController.addTeam,
-  userController.getTeams,
   (req, res) => {
-    return res.status(200).json(res.locals.teams);
+    return res.status(200).json();
   }
 );
 
