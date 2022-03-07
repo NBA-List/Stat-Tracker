@@ -1,24 +1,23 @@
-import React, { Component } from "react";
-import Login from "../components/Login.js";
-import MainContainer from "./MainContainer.js";
-import { useState } from "react";
+/* eslint-disable react/jsx-filename-extension */
+import React, { Component, useState } from 'react';
+import Login from '../components/Login.js';
+import MainContainer from './MainContainer.js';
 
 // use useContext instead grab context from Login
 // const [ loggedIn ] = useState('');
 
-document.getElementById("client_id").content = process.env.CLIENT_ID;
+document.getElementById('client_id').content = process.env.CLIENT_ID;
 
 // class App extends Component {
-const App = () => {
-  // if not logged in, render this
+function App() {
   return (
     <>
-      <Login />
-      <MainContainer />
-      <p>Hello from App.js</p>
+      {/* if not logged in, render this */}
+      {/* <Login /> */}
+      {/* if logged in, render dashboard */}
+      <MainContainer allPlayerInfo={[]} />
     </>
   );
-  // if logged in, render dashboard
-};
+}
 
 export default App;
