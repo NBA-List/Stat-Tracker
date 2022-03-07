@@ -99,8 +99,7 @@ class SearchBox extends Component {
   // add favorited player to database
   addFavoritePlayer() {
     const playerId = document.getElementById('player-names').value;
-    console.log(playerId);
-    fetch('/user/addPlayer', {
+    fetch('/user/addPlayer/' + playerId, {
       method: 'POST',
       body: JSON.stringify(playerId),
     })

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const MONGO_URI = 'mongodb+srv://ianfmadden:Password123@cluster0.urrq0.mongodb.net/Cluster0?retryWrites=true&w=majority';
+const MONGO_URI = 'mongodb+srv://aidenblinn:Goy7rbVkyC7HCzV9@cluster0.ztwql.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
 mongoose
   .connect(MONGO_URI, {
@@ -13,6 +13,8 @@ mongoose
   .then(() => console.log('Connected to Mongo DB.'))
   .catch((err) => console.log(err));
 
+mongoose.set('debug', true);
+
 const { Schema } = mongoose;
 
 // sets a schema for the 'species' collection
@@ -24,6 +26,7 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   profilePic: {
     type: String,

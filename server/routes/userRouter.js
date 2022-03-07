@@ -3,19 +3,34 @@ const userController = require('../controllers/UserController');
 const router = express.Router();
 
 router.post(
-  '/addTeam/:id',
+  '/addTeam/:teamId',
   userController.addTeam,
   (req, res) => {
-    return res.status(200).json();
+    return res.status(200).json({teams: res.locals.teams});
   }
 );
 
 router.post(
-  '/addPlayer',
+  '/addPlayer/:playerId',
   userController.addPlayer,
-  userController.getPlayers,
   (req, res) => {
-    return res.status(200).json(res.locals.players);
+    return res.status(200).json({players: res.locals.players});
+  }
+);
+
+router.post(
+  '/removeTeam/:teamId',
+  userController.removeTeam,
+  (req, res) => {
+    return res.status(200).json({teams: res.locals.teams});
+  }
+);
+
+router.post(
+  '/removePlayer/:playerId',
+  userController.removePlayer,
+  (req, res) => {
+    return res.status(200).json({players: res.locals.players});
   }
 );
 
