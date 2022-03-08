@@ -29,14 +29,6 @@ function Dashboard({ favsPlayer, favsTeam, setFavsPlayer, setFavsTeam }) {
         <h2>Players</h2>
         {playerComponents}
       </div>
-      <p style={{ fontSize: '30px' }}>
-        Update: The following shows the "updated" example and answer.
-        http://jsfiddle.net/Wcgvt/181/ The secret there is to use box-sizing:
-        border-box, and some padding to make the second div height 100%, but
-        move it's content down 50px. Then wrap the content in a div with
-        overflow: auto to contain the scrollbar. Pay attention to z-indexes to
-        keep all the text selectable - hope this helps, several years later.
-      </p>
     </div>
   );
 }

@@ -120,7 +120,6 @@ function SearchBox({ setFavsPlayer, setFavsTeam }) {
         selected="selected"
       >
         <option value="Choose">Choose a team:</option>
-        <option value="test1">Test1</option>
       </select>
       <br />
       <label htmlFor="player-names">Choose a player: </label>
@@ -131,7 +130,6 @@ function SearchBox({ setFavsPlayer, setFavsTeam }) {
         id="player-names"
       >
         <option value="Choose">Choose a player:</option>
-        <option value="test3">Test2</option>
       </select>
       <input
         type="button"

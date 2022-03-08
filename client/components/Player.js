@@ -18,6 +18,7 @@ function Player({ favsPlayer, setFavsPlayer, playerId }) {
         labels: [...Array(games.length).keys()].map((el) => el + 1),
         datasets: [
           {
+            label: 'Points',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data: points,
