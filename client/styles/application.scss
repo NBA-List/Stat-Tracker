@@ -1,4 +1,4 @@
-$header-height: 100px;
+$header-height: 150px;
 $sidebar-width: 300px;
 
 body {
@@ -29,7 +29,7 @@ body {
 #sidebar {
   position: fixed;
   left: 0;
-  top: 100px;
+  top: $header-height;
   height: calc(100vh - $header-height);
   background: blue;
   width: $sidebar-width;
@@ -43,7 +43,7 @@ body {
 
 #favorites {
   height: 40%;
-  background: yellow;
+  background-image: url('https://static.wikia.nocookie.net/disney/images/e/e4/Getcha_head.jpg');
   width: 100%;
 }
 
