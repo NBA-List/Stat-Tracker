@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { Component } from 'react';
+import React from 'react';
 import SearchBox from '../components/SearchBox';
 import Favorites from '../components/Favorites';
 

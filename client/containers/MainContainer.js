@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { Component, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import Header from '../components/Header';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';

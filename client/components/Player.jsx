@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 const QuickChart = require('quickchart-js');
 
 function Player({ favsPlayer, setFavsPlayer, playerId }) {
+  // utilizes QuickChart package to generate chart with player's PPG for 2021 season
   const populatePlayer = (data) => {
     const games = data.response;
     const points = [];
@@ -36,6 +37,7 @@ function Player({ favsPlayer, setFavsPlayer, playerId }) {
     document.getElementById('ppg').src = ppg.getUrl();
   };
 
+  // takes in data from basketball API to populate page with player's stats
   const populatePlayerVitals = (data) => {
     const {
       firstname,
@@ -74,6 +76,7 @@ function Player({ favsPlayer, setFavsPlayer, playerId }) {
     return keys[Math.floor(Math.random() * keys.length)];
   };
 
+  // requests player info and statistics upon initial component load
   useEffect(() => {
     fetch(
       `https://api-nba-v1.p.rapidapi.com/players/statistics?id=${playerId}&season=2021`,
@@ -99,15 +102,12 @@ function Player({ favsPlayer, setFavsPlayer, playerId }) {
 
   return (
     <div>
-      <p id="playerVitals"></p>
-      <img id="ppg"></img>
+      <p id="playerVitals" />
+      <img id="ppg" alt="player points per game" />
     </div>
   );
 
   {
-    /* // const playerStats = this.state.allPlayerInfo.map((data, i) => (
-  //   <FeedItem url={data} key={(i += "hello")} />
-  // )); */
   }
 }
 

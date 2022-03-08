@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useGoogleLogin } from 'react-google-login';
 import GoogleLogin from 'react-google-login';
 import refreshTokenSetup from '../../auth_tok/refreshTokenSetup';
-import Login from './Login';
 
 const { CLIENT_ID } = process.env;
 const clientId = CLIENT_ID;

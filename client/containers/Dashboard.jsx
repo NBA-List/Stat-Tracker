@@ -1,11 +1,6 @@
-/* eslint-disable react/jsx-filename-extension */
-/* eslint-disable react/prefer-stateless-function */
 import React, { useEffect } from 'react';
 import Team from '../components/Team';
 import Player from '../components/Player';
-import Login from '../components/Login';
-import GoogleLogin from 'react-google-login';
-import GoogleLoginHook from '../components/GoogleLoginHook';
 
 function Dashboard({ favsPlayer, favsTeam, setFavsPlayer, setFavsTeam }) {
   const playerComponents = favsPlayer.map((playerId) => (

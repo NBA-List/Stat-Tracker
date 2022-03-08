@@ -11,6 +11,7 @@ function Team({ favsTeam, setFavsTeam, teamId }) {
     document.getElementById(teamId).src = team.logo;
   };
 
+  // grab team info when component renders
   useEffect(() => {
     // fetch(
     //   `https://api-nba-v1.p.rapidapi.com/teams/statistics?id=${teamId}&season=2021`,
@@ -37,7 +38,7 @@ function Team({ favsTeam, setFavsTeam, teamId }) {
 
   return (
     <div>
-      <img className="logo" id={teamId}></img>
+      <img className="logo" alt="team logo" id={teamId} />
     </div>
   );
 }

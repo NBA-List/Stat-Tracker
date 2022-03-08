@@ -19,6 +19,7 @@ function SearchBox({ setFavsPlayer, setFavsTeam }) {
     return keys[Math.floor(Math.random() * keys.length)];
   };
 
+  // grabs team list to populate dropdown menu
   useEffect(() => {
     fetch('https://api-nba-v1.p.rapidapi.com/teams', {
       headers: {
@@ -41,6 +42,7 @@ function SearchBox({ setFavsPlayer, setFavsTeam }) {
       });
   }, []);
 
+  // get players from API when team selected
   const getPlayers = () => {
     const teamId = document.getElementById('team-names').value;
     if (teamId === 'Choose') {
@@ -63,6 +65,7 @@ function SearchBox({ setFavsPlayer, setFavsTeam }) {
     )
       .then((data) => data.json())
       .then((data) => {
+        // grab player info from selected team to populate menu
         teamPlayerVitals = data.response;
         teamPlayerNames = [];
         teamPlayerVitals.forEach((player) => {
@@ -81,6 +84,7 @@ function SearchBox({ setFavsPlayer, setFavsTeam }) {
       });
   };
 
+  // set visibility of "favorite player" button
   const setPlayerButton = () => {
     if (document.getElementById('player-names').value === 'Choose') {
       document.getElementById('favorite-player').style.visibility = 'hidden';

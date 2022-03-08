@@ -1,6 +1,6 @@
-const path = require("path");
-const { OAuth2Client } = require("google-auth-library");
-const User = require("../models/UserModels");
+const path = require('path');
+const { OAuth2Client } = require('google-auth-library');
+const User = require('../models/UserModels');
 
 const { CLIENT_ID } = process.env;
 const client = new OAuth2Client(CLIENT_ID);
@@ -14,7 +14,7 @@ const UserController = {
     try {
       // pul JWT from the request header
 
-      const {credential} = req.body;
+      const { credential } = req.body;
 
       // use the JWT to get the user's profile from Google
       const ticket = await client.verifyIdToken({
@@ -24,20 +24,19 @@ const UserController = {
         requiredAudience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
       });
 
-
       // get the user's profile from Google
       const payload = ticket.getPayload();
       // pull the user's profile information from the profile
-      const {name, email, picture} = payload;
+      const { name, email, picture } = payload;
       console.log('payload: ', payload);
 
       // check if the user is already in our database
-      let user = await User.findOne({ email: email.split("@")[0] });
+      let user = await User.findOne({ email: email.split('@')[0] });
       if (!user) {
         // create a new user if the user is not in our database
-        user = await User.create({ name, email: email.split("@")[0], picture });
+        user = await User.create({ name, email: email.split('@')[0], picture });
       }
-      res.cookie("email", email.split("@")[0]);
+      res.cookie('email', email.split('@')[0]);
 
       // send the user back to the client
       res.locals.user = user;
@@ -59,8 +58,8 @@ const UserController = {
       (err, user) => {
         if (err) {
           return next({
-            log: "Error in addTeam middleware",
-            message: { err: "An error occurred while trying to add a team" },
+            log: 'Error in addTeam middleware',
+            message: { err: 'An error occurred while trying to add a team' },
           });
         }
         res.locals.teams = user.favorited_teams;
@@ -80,8 +79,8 @@ const UserController = {
       (err, user) => {
         if (err) {
           return next({
-            log: "Error in addTeam middleware",
-            message: { err: "An error occurred while trying to remove a team" },
+            log: 'Error in addTeam middleware',
+            message: { err: 'An error occurred while trying to remove a team' },
           });
         }
         res.locals.teams = user.favorited_teams;
@@ -101,9 +100,9 @@ const UserController = {
       (err, user) => {
         if (err) {
           return next({
-            log: "Error in addPlayer middleware",
+            log: 'Error in addPlayer middleware',
             message: {
-              err: "An error occurred while trying to add a player",
+              err: 'An error occurred while trying to add a player',
             },
           });
         }
@@ -124,9 +123,9 @@ const UserController = {
       (err, user) => {
         if (err) {
           return next({
-            log: "Error in addPlayer middleware",
+            log: 'Error in addPlayer middleware',
             message: {
-              err: "An error occurred while trying to remove a player",
+              err: 'An error occurred while trying to remove a player',
             },
           });
         }
